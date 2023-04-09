@@ -45,3 +45,11 @@ class Vizinhanca2opt(Vizinhanca):
                         if qualidade < melhor_qualidade:
                             return Solucao(qualidade, self.gerar_novo_ciclo(solucao, i, j), i, j)
         return solucao
+
+    # Para a primeira chamada da função usar i_inicial = 0 e j_inicial = 1
+    def proximo_vizinho(self, solucao: Solucao, i_inicial: int, j_inicial: int) -> Solucao:
+        for i in range(i_inicial, self.tamanho-1):
+            for j in range(j_inicial, self.tamanho-1):
+                qualidade = self.computar_qualidade(solucao, i, j)
+                return Solucao(qualidade, self.gerar_novo_ciclo(solucao, i, j), i, j)
+        return solucao
