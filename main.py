@@ -76,7 +76,6 @@ def main():
                 tempo_inicial = time.time()
                 algoritmo_busca.tempo_limite = tempo_limite + tempo_inicial
                 solucao_list = algoritmo_busca.buscar_solucao()
-                exit(0)
                 # Trecho usado para salvar todas os resultados intermediários
                 #for solucao in solucao_list:
                 #    resultados.append((instancias[idx], algoritmo_busca.nome, solucao.qualidade, tempo_limite + solucao.tempo + 0.000001, solucao.iteracao))
