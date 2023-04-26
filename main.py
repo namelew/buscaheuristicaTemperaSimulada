@@ -2,16 +2,8 @@ import csv
 import statistics
 import time
 import os.path
-from BuscaLocalMelhorMelhora import BuscaLocalMelhorMelhora
-from BuscaLocalPrimeiraMelhora import BuscaLocalPrimeiraMelhora
-from BuscaTabu import BuscaTabu
 from Vizinhanca2opt import Vizinhanca2opt
-from VizinhancaShift import VizinhancaShift
-from BuscaConstrutivaGulosoAlfa import BuscaConstrutivaGulosoAlfa
-from BuscaConstrutivaGulosa import BuscaConstrutivaGulosa
-from BuscaHibridaGulosoPrimeiraMelhora import BuscaHibridaGulosoPrimeiraMelhora
-from BuscaHibridaGulosoMelhorMelhora import BuscaHibridaGulosoMelhorMelhora
-from BuscaHibridaGulosoTabu import BuscaHibridaGulosoTabu
+from BuscaTemperaSimulada import BuscaTemperaSimulada
 
 
 def ler_arquivo(instancia: str) -> tuple:
@@ -57,9 +49,10 @@ instancias = ("Western Sahara", "Djibouti", "Qatar", "Uruguay", "Zimbabwe")
 solucoes_otimas = (27603, 6656, 9352, 79114, 95345)
 #solucoes_otimas = (95345,)
 amostras = 10
-parametro_mandato = 5  # tamanho da instância / parâmetro mandato - busca tabu
-parametro_alfa = 0.1  # 30% - guloso-alfa
-parametro_tempo = 0.06  # segundos * tamanho instância
+parametro_tempo = 0.06  # segundos * tamanho 
+alpha = 0.5
+RESFIRAMENTOLINEAR=1
+RESFIRAMENTOGEOMETRICO=0
 autoria = "FG"
 
 
@@ -69,17 +62,7 @@ def main():
         tamanho = len(distancias)
         solucao_otima = solucoes_otimas[idx]
         algoritmos = (
-            BuscaConstrutivaGulosa(distancias, solucao_otima),
-            BuscaConstrutivaGulosoAlfa(distancias, solucao_otima, parametro_alfa),
-            BuscaHibridaGulosoMelhorMelhora(Vizinhanca2opt(distancias), solucao_otima),
-            BuscaHibridaGulosoPrimeiraMelhora(Vizinhanca2opt(distancias), solucao_otima),
-            BuscaHibridaGulosoTabu(Vizinhanca2opt(distancias), solucao_otima, parametro_mandato),
-            BuscaLocalMelhorMelhora(Vizinhanca2opt(distancias), solucao_otima),
-            BuscaLocalMelhorMelhora(VizinhancaShift(distancias), solucao_otima),
-            BuscaLocalPrimeiraMelhora(Vizinhanca2opt(distancias), solucao_otima),
-            BuscaLocalPrimeiraMelhora(VizinhancaShift(distancias), solucao_otima),
-            BuscaTabu(Vizinhanca2opt(distancias), solucao_otima, parametro_mandato),
-            BuscaTabu(VizinhancaShift(distancias), solucao_otima, parametro_mandato),
+            BuscaTemperaSimulada(Vizinhanca2opt(distancias), solucao_otima, RESFIRAMENTOLINEAR, alpha, 1),
             )
         tempo_limite = tamanho * parametro_tempo
         print("Instância:", instancias[idx])
@@ -93,6 +76,7 @@ def main():
                 tempo_inicial = time.time()
                 algoritmo_busca.tempo_limite = tempo_limite + tempo_inicial
                 solucao_list = algoritmo_busca.buscar_solucao()
+                exit(0)
                 # Trecho usado para salvar todas os resultados intermediários
                 #for solucao in solucao_list:
                 #    resultados.append((instancias[idx], algoritmo_busca.nome, solucao.qualidade, tempo_limite + solucao.tempo + 0.000001, solucao.iteracao))
