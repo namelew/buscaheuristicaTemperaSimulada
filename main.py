@@ -51,7 +51,7 @@ solucoes_otimas = (27603, 6656, 9352, 79114, 95345)
 #solucoes_otimas = (95345,)
 amostras = 10
 parametro_tempo = 0.06  # segundos * tamanho 
-alpha = 0.5
+alpha = 0.52
 RESFIRAMENTOLINEAR=1
 RESFIRAMENTOGEOMETRICO=0
 temperatura=1
@@ -64,7 +64,7 @@ def main():
         tamanho = len(distancias)
         solucao_otima = solucoes_otimas[idx]
         algoritmos = (
-            BuscaLocalTemperaSimulada(Vizinhanca2opt(distancias), solucao_otima, RESFIRAMENTOLINEAR, alpha, temperatura),
+            BuscaLocalTemperaSimulada(Vizinhanca2opt(distancias), solucao_otima, RESFIRAMENTOGEOMETRICO, alpha, temperatura),
             )
         tempo_limite = tamanho * parametro_tempo
         print("Instância:", instancias[idx])
