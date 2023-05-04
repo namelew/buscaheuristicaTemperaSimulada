@@ -1,7 +1,8 @@
 from Vizinhanca import Vizinhanca
 from Solucao import Solucao
-import math
-
+from math import inf,e
+from random import random,seed
+from time import time
 
 class VizinhancaShift(Vizinhanca):
     def __init__(self, distancias: tuple):
@@ -39,20 +40,26 @@ class VizinhancaShift(Vizinhanca):
         return ciclo
 
     def melhor_vizinho(self, solucao: Solucao, tabu: set, temperatura:float) -> Solucao:
-        melhor_qualidade = math.inf
+        melhor_qualidade = inf
         imelhor = -1
         jmelhor = -1
+        seed(time())
         for i in range(self.tamanho-1):
             if solucao.ciclo[i] not in tabu:
-                for j in range(self.tamanho-1):
-                    if j < i and i - j == 1:  # evitar testar swap duas vezes
-                        continue
-                    if j != i and solucao.ciclo[j] not in tabu:
+                for j in range(i+1, self.tamanho-1):
+                    if solucao.ciclo[j] not in tabu:
                         qualidade = self.computar_qualidade(solucao, i, j)
                         if qualidade < melhor_qualidade:
                             melhor_qualidade = qualidade
                             imelhor = i
                             jmelhor = j
+                        elif temperatura > 0:
+                            deltaC = lambda x:(x/melhor_qualidade)-1
+                            calculaAceite = lambda x:e ** ((-1 * deltaC(x))/temperatura)
+                            if random() <= calculaAceite(qualidade):
+                                melhor_qualidade = qualidade
+                                imelhor = i
+                                jmelhor = j
         return Solucao(melhor_qualidade, self.gerar_novo_ciclo(solucao, imelhor, jmelhor), solucao.ciclo[imelhor], solucao.ciclo[jmelhor])
 
     def primeiro_vizinho_melhor(self, solucao: Solucao, tabu: set) -> Solucao:

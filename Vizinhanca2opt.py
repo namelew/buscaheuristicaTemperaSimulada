@@ -2,7 +2,7 @@ from Vizinhanca import Vizinhanca
 from Solucao import Solucao
 from math import e,inf
 from random import random,seed
-import time
+from time import time
 
 
 class Vizinhanca2opt(Vizinhanca):
@@ -26,7 +26,7 @@ class Vizinhanca2opt(Vizinhanca):
         melhor_qualidade = inf
         imelhor = -1
         jmelhor = -1
-        seed(time.time())
+        seed(time())
         for i in range(self.tamanho-1):
             if solucao.ciclo[i] not in tabu:
                 for j in range(i+1, self.tamanho-1):
