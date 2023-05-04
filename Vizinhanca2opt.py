@@ -20,7 +20,7 @@ class Vizinhanca2opt(Vizinhanca):
     def gerar_novo_ciclo(solucao: Solucao, i: int, j: int) -> list:
         return solucao.ciclo[:i] + list(reversed(solucao.ciclo[i:j + 1])) + solucao.ciclo[j + 1:]
 
-    def melhor_vizinho(self, solucao: Solucao, tabu: set) -> Solucao:
+    def melhor_vizinho(self, solucao: Solucao, tabu: set, temperatura:float) -> Solucao:
         melhor_qualidade = math.inf
         imelhor = -1
         jmelhor = -1

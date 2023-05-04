@@ -38,7 +38,7 @@ class VizinhancaShift(Vizinhanca):
             ciclo = solucao.ciclo[:j] + [solucao.ciclo[i]] + solucao.ciclo[j:i] + solucao.ciclo[i + 1:]
         return ciclo
 
-    def melhor_vizinho(self, solucao: Solucao, tabu: set) -> Solucao:
+    def melhor_vizinho(self, solucao: Solucao, tabu: set, temperatura:float) -> Solucao:
         melhor_qualidade = math.inf
         imelhor = -1
         jmelhor = -1

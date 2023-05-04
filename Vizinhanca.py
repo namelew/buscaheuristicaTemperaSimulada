@@ -19,7 +19,7 @@ class Vizinhanca:
         pass
 
     @abstractmethod
-    def melhor_vizinho(self, solucao: Solucao, tabu: set) -> Solucao:
+    def melhor_vizinho(self, solucao: Solucao, tabu: set, temperatura:float) -> Solucao:
         pass
 
     @abstractmethod
