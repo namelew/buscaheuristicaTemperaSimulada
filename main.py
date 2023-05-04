@@ -4,6 +4,7 @@ import time
 import os.path
 from Vizinhanca2opt import Vizinhanca2opt
 from BuscaHíbridaGulosoTemperaSimulada import BuscaHibridaGulosoTemperaSimulada
+from BuscaLocalTemperaSimulada import BuscaLocalTemperaSimulada
 
 
 def ler_arquivo(instancia: str) -> tuple:
@@ -63,7 +64,7 @@ def main():
         tamanho = len(distancias)
         solucao_otima = solucoes_otimas[idx]
         algoritmos = (
-            BuscaHibridaGulosoTemperaSimulada(Vizinhanca2opt(distancias), solucao_otima, RESFIRAMENTOLINEAR, alpha, temperatura),
+            BuscaLocalTemperaSimulada(Vizinhanca2opt(distancias), solucao_otima, RESFIRAMENTOLINEAR, alpha, temperatura),
             )
         tempo_limite = tamanho * parametro_tempo
         print("Instância:", instancias[idx])
