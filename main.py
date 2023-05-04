@@ -53,6 +53,7 @@ parametro_tempo = 0.06  # segundos * tamanho
 alpha = 0.5
 RESFIRAMENTOLINEAR=1
 RESFIRAMENTOGEOMETRICO=0
+temperatura=1
 autoria = "FG"
 
 
@@ -62,7 +63,7 @@ def main():
         tamanho = len(distancias)
         solucao_otima = solucoes_otimas[idx]
         algoritmos = (
-            BuscaHibridaGulosoTemperaSimulada(Vizinhanca2opt(distancias), solucao_otima, RESFIRAMENTOLINEAR, alpha, 1),
+            BuscaHibridaGulosoTemperaSimulada(Vizinhanca2opt(distancias), solucao_otima, RESFIRAMENTOLINEAR, alpha, temperatura),
             )
         tempo_limite = tamanho * parametro_tempo
         print("Instância:", instancias[idx])
