@@ -5,14 +5,17 @@ import time
 
 
 class BuscaConstrutivaGulosa(AlgoritmoBusca):
-    def __init__(self, distancias: tuple, solucao_otima: int):
+    def __init__(self, distancias: tuple, solucao_otima: int, limite_interacoes:int = None):
         super().__init__("BCG", distancias, solucao_otima)
+        if limite_interacoes != None:
+            self.limite_interacoes = limite_interacoes
 
     def buscar_solucao(self) -> list[Solucao]:
         melhor_qualidade = math.inf
         iteracao = 1
         solucao_list = []
-        while time.time() < self.tempo_limite and iteracao < self.tamanho:
+        self.limite_interacoes = self.tamanho if self.limite_interacoes == None else self.limite_interacoes
+        while time.time() < self.tempo_limite and iteracao < self.limite_interacoes:
             solucao = Solucao(self.distancias[0][iteracao], [iteracao], 0, 0)  # Elemento 0 fixo no início da solução
             visitados = {iteracao}
             elemento = iteracao
