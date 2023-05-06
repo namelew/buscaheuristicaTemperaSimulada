@@ -6,8 +6,8 @@ import time
 class BuscaLocalTemperaSimulada(AlgoritmoBusca):
     def __init__(self, vizinhanca: Vizinhanca, solucao_otima:int, tipo_resfriamento:int, alpha:float, temperatura:float, solucao:Solucao = None):
         super().__init__("BTS"+vizinhanca.nome, vizinhanca.distancias, solucao_otima)
-        self.temperatura = temperatura
         self.vizinhanca = vizinhanca
+        self.temperatura = temperatura
         self.alpha = alpha
 
         if tipo_resfriamento == 0:
@@ -28,6 +28,7 @@ class BuscaLocalTemperaSimulada(AlgoritmoBusca):
         while time.time() < self.tempo_limite:
             self.solucao = self.vizinhanca.melhor_vizinho(self.solucao, set(), self.temperatura)
             if self.solucao.qualidade < melhor_qualidade:
+                melhor_qualidade = self.solucao.qualidade
                 self.solucao.tempo = time.time() - self.tempo_limite
                 self.solucao.iteracao = iteracao
                 solucao_list.append(self.solucao)
@@ -36,5 +37,5 @@ class BuscaLocalTemperaSimulada(AlgoritmoBusca):
             else:
                 break
             iteracao += 1
-            self.temperatura = self.resfriar(self.temperatura)
+            self.temperatura = self.resfriar(self.temperatura) if self.resfriar(self.temperatura) >= 0.01 else 0
         return solucao_list
