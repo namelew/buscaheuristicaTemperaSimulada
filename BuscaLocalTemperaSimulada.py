@@ -1,7 +1,9 @@
 from AlgoritmoBusca import AlgoritmoBusca
 from Vizinhanca import Vizinhanca
 from Solucao import Solucao
-import time
+from random import random,seed
+from math import e,inf
+from time import time
 
 class BuscaLocalTemperaSimulada(AlgoritmoBusca):
     def __init__(self, vizinhanca: Vizinhanca, solucao_otima:int, tipo_resfriamento:int, alpha:float, temperatura:float, solucao:Solucao = None):
@@ -25,11 +27,23 @@ class BuscaLocalTemperaSimulada(AlgoritmoBusca):
         solucao_list = [self.solucao]
         iteracao = self.solucao.iteracao + 1
         melhor_qualidade = self.solucao.qualidade
-        while time.time() < self.tempo_limite:
-            self.solucao = self.vizinhanca.melhor_vizinho(self.solucao, set(), self.temperatura)
-            if self.solucao.qualidade < melhor_qualidade:
+        seed(time())
+        while time() < self.tempo_limite:
+            pivo = self.solucao
+            for i in range(self.vizinhanca.tamanho - 1):
+                for j in range(i,self.vizinhanca.tamanho - 2):
+                    vizinho = self.vizinhanca.proximo_vizinho(pivo, i, j + 1)
+                    if vizinho.qualidade < pivo.qualidade:
+                        pivo = vizinho
+                    elif self.temperatura > 0:
+                        deltaC = lambda x:(x/pivo.qualidade)-1
+                        calculaAceite = lambda x:e ** ((-1 * deltaC(x))/self.temperatura)
+                        if random() <= calculaAceite(vizinho.qualidade):
+                            pivo = vizinho
+            if pivo.qualidade < melhor_qualidade:
+                self.solucao = pivo
                 melhor_qualidade = self.solucao.qualidade
-                self.solucao.tempo = time.time() - self.tempo_limite
+                self.solucao.tempo = time() - self.tempo_limite
                 self.solucao.iteracao = iteracao
                 solucao_list.append(self.solucao)
                 if melhor_qualidade == self.solucao_otima:
