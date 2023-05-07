@@ -32,6 +32,7 @@ class BuscaLocalTemperaSimulada(AlgoritmoBusca):
         while time() < self.tempo_limite:
             pivo = self.solucao
             changePivo = True
+            melhor_local = pivo
             while changePivo and time() < self.tempo_limite:
                 changePivo = False
                 for i in range(self.vizinhanca.tamanho - 1):
@@ -41,6 +42,8 @@ class BuscaLocalTemperaSimulada(AlgoritmoBusca):
                             timeout = True
                             break
                         if vizinho.qualidade < pivo.qualidade:
+                            if vizinho.qualidade < melhor_local.qualidade:
+                                melhor_local = vizinho
                             changePivo = True
                             pivo = vizinho
                             break
@@ -51,8 +54,8 @@ class BuscaLocalTemperaSimulada(AlgoritmoBusca):
                                 pivo = vizinho
                     if timeout or changePivo:
                         break
-            if pivo.qualidade < melhor_qualidade:
-                self.solucao = pivo
+            if melhor_local.qualidade < melhor_qualidade:
+                self.solucao = melhor_local
                 melhor_qualidade = self.solucao.qualidade
                 self.solucao.tempo = time() - self.tempo_limite
                 self.solucao.iteracao = iteracao
