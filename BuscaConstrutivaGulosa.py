@@ -7,8 +7,7 @@ import time
 class BuscaConstrutivaGulosa(AlgoritmoBusca):
     def __init__(self, distancias: tuple, solucao_otima: int, limite_interacoes:int = None):
         super().__init__("BCG", distancias, solucao_otima)
-        if limite_interacoes != None:
-            self.limite_interacoes = limite_interacoes
+        self.limite_interacoes = limite_interacoes
 
     def buscar_solucao(self) -> list[Solucao]:
         melhor_qualidade = math.inf

@@ -64,7 +64,7 @@ def main():
         tamanho = len(distancias)
         solucao_otima = solucoes_otimas[idx]
         algoritmos = (
-            BuscaLocalTemperaSimulada(Vizinhanca2opt(distancias), solucao_otima, RESFIRAMENTOGEOMETRICO, alpha, temperatura),
+            BuscaHibridaGulosoTemperaSimulada(Vizinhanca2opt(distancias), solucao_otima, RESFIRAMENTOGEOMETRICO, alpha, temperatura),
             )
         tempo_limite = tamanho * parametro_tempo
         print("Instância:", instancias[idx])
