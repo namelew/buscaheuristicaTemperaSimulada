@@ -3,7 +3,6 @@ from BuscaConstrutivaGulosa import BuscaConstrutivaGulosa
 from Vizinhanca import Vizinhanca
 from Solucao import Solucao
 from BuscaLocalTemperaSimulada import BuscaLocalTemperaSimulada
-import time
 
 class BuscaHibridaGulosoTemperaSimulada(AlgoritmoBusca):
     def __init__(self, vizinhanca: Vizinhanca, solucao_otima:int, tipo_resfriamento:int, alpha:float, temperatura:float):
