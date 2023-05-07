@@ -7,7 +7,7 @@ from time import time
 
 class BuscaLocalTemperaSimulada(AlgoritmoBusca):
     def __init__(self, vizinhanca: Vizinhanca, solucao_otima:int, tipo_resfriamento:int, alpha:float, temperatura:float, solucao:Solucao = None):
-        super().__init__("BTS"+vizinhanca.nome, vizinhanca.distancias, solucao_otima)
+        super().__init__("BTS"+("RG" if tipo_resfriamento == 0 else "RL")+ vizinhanca.nome, vizinhanca.distancias, solucao_otima)
         self.vizinhanca = vizinhanca
         self.temperatura = temperatura
         self.alpha = alpha

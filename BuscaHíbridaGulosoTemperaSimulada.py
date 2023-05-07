@@ -6,7 +6,7 @@ from BuscaLocalTemperaSimulada import BuscaLocalTemperaSimulada
 
 class BuscaHibridaGulosoTemperaSimulada(AlgoritmoBusca):
     def __init__(self, vizinhanca: Vizinhanca, solucao_otima:int, tipo_resfriamento:int, alpha:float, temperatura:float):
-        super().__init__("BTS"+vizinhanca.nome, vizinhanca.distancias, solucao_otima)
+        super().__init__("CG+BTS" + ("RG" if tipo_resfriamento == 0 else "RL") + vizinhanca.nome, vizinhanca.distancias, solucao_otima)
         self.tipo_resfriamento = tipo_resfriamento
         self.vizinhanca = vizinhanca
         self.temperatura = temperatura
