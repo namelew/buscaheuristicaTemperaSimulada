@@ -31,6 +31,7 @@ class BuscaLocalTemperaSimulada(AlgoritmoBusca):
         seed(time())
         while time() < self.tempo_limite:
             pivo = self.solucao
+            changePivo = False
             for i in range(self.vizinhanca.tamanho - 1):
                 for j in range(i,self.vizinhanca.tamanho - 2):
                     vizinho = self.vizinhanca.proximo_vizinho(pivo, i, j + 1)
@@ -38,13 +39,15 @@ class BuscaLocalTemperaSimulada(AlgoritmoBusca):
                         timeout = True
                         break
                     if vizinho.qualidade < pivo.qualidade:
+                        changePivo = True
                         pivo = vizinho
+                        break
                     elif self.temperatura > 0:
                         deltaC = lambda x:(x/pivo.qualidade)-1
                         calculaAceite = lambda x:e ** ((-1 * deltaC(x))/self.temperatura)
                         if random() <= calculaAceite(vizinho.qualidade):
                             pivo = vizinho
-                if timeout:
+                if timeout or changePivo:
                     break
             if pivo.qualidade < melhor_qualidade:
                 self.solucao = pivo
