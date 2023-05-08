@@ -5,6 +5,7 @@ import os.path
 from Vizinhanca2opt import Vizinhanca2opt
 from BuscaHíbridaGulosoTemperaSimulada import BuscaHibridaGulosoTemperaSimulada
 
+# Bruna e Diogo
 
 def ler_arquivo(instancia: str) -> tuple:
     with open('instancias/' + instancia + '.csv', 'r') as arquivo:
